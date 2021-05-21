@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="puresmap.domain.repository.PuresmapRepository">
+
+	<resultMap id="publicHospitalResultMap" type="publicHospital">
+		<id property="seq" column="seq" />
+		<result property="date" column="date" />
+		<result property="city" column="city" />
+		<result property="town" column="town" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="type" column="type" />
+		<result property="phoneNumber" column="phone_number" />
+		<result property="lat" column="lat" />
+		<result property="lon" column="lon" />
+	</resultMap>
+
+	<select id="selectEveryHospital" parameterType="string"
+		resultMap="publicHospitalResultMap">
+		SELECT
+		seq,
+		date,
+		city,
+		town,
+		name,
+		address,
+		type,
+		phone_number,
+		lat,
+		lon
+		FROM
+		public_hospital
+		WHERE
+		town LIKE '%포항%'
+	</select>
+
+	<select id="selectEveryCenter" parameterType="string"
+		resultMap="publicHospitalResultMap">
+		SELECT
+		seq,
+		date,
+		city,
+		town,
+		name,
+		address,
+		type,
+		phone_number,
+		lat,
+		lon
+		FROM
+		screening_center
+		WHERE
+		town LIKE '%포항%'
+	</select>
+</mapper>

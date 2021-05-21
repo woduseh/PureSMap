@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+       ">
+
+	<bean id="jdbcTemplateForCodeList"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="fetchSize"
+			value="${codelist.jdbc.fetchSize:1000}" />
+	</bean>
+
+	<bean id="abstractJdbcCodeList"
+		class="org.terasoluna.gfw.common.codelist.JdbcCodeList"
+		abstract="true">
+		<property name="jdbcTemplate" ref="jdbcTemplateForCodeList" />
+	</bean>
+
+	<bean id="abstractSimpleI18nCodeList"
+		class="org.terasoluna.gfw.common.codelist.i18n.SimpleI18nCodeList"
+		abstract="true">
+		<property name="fallbackTo" value="en" />
+	</bean>
+
+	<!-- defines code lists -->
+	<bean id="CL_BIRTH_YEAR"
+		class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+		<property name="from" value="1940" />
+		<property name="to" value="2000" />
+	</bean>
+
+	<bean id="CL_YEAR"
+		class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+		<property name="from" value="2020" />
+		<property name="to" value="1980" />
+		<property name="valueFormat" value="%d" />
+		<property name="labelFormat" value="%04d" />
+	</bean>
+
+	<bean id="CL_MONTH"
+		class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+		<property name="from" value="1" />
+		<property name="to" value="12" />
+		<property name="valueFormat" value="%d" />
+		<property name="labelFormat" value="%02d" />
+	</bean>
+
+	<bean id="CL_DAY"
+		class="org.terasoluna.gfw.common.codelist.NumberRangeCodeList">
+		<property name="from" value="1" />
+		<property name="to" value="31" />
+		<property name="valueFormat" value="%d" />
+		<property name="labelFormat" value="%02d" />
+	</bean>
+
+	<bean id="CL_MODEL" parent="abstractSimpleI18nCodeList">
+		<property name="rows">
+			<util:map key-type="java.util.Locale"
+				value-type="java.util.LinkedHashMap"
+				map-class="java.util.LinkedHashMap">
+				<entry key="en">
+					<util:map key-type="java.lang.String"
+						value-type="java.lang.String" map-class="java.util.LinkedHashMap">
+						<entry key="" value="-선택-" />
+						<entry key="0" value="현대" />
+						<entry key="1" value="제네시스" />
+						<entry key="2" value="기아" />
+						<entry key="3" value="쉐보레" />
+						<entry key="4" value="르노삼성" />
+						<entry key="5" value="쌍용" />
+						<entry key="6" value="기타 제조사" />
+					</util:map>
+				</entry>
+			</util:map>
+		</property>
+	</bean>
+
+	<bean id="CL_BODY_STYLE" parent="abstractSimpleI18nCodeList">
+		<property name="rows">
+			<util:map key-type="java.util.Locale"
+				value-type="java.util.LinkedHashMap"
+				map-class="java.util.LinkedHashMap">
+				<entry key="en">
+					<util:map key-type="java.lang.String"
+						value-type="java.lang.String" map-class="java.util.LinkedHashMap">
+						<entry key="" value="-선택-" />
+						<entry key="0" value="SUV" />
+						<entry key="1" value="SEDAN" />
+					</util:map>
+				</entry>
+			</util:map>
+		</property>
+	</bean>
+
+	<bean id="CL_COLOR" parent="abstractSimpleI18nCodeList">
+		<property name="rows">
+			<util:map key-type="java.util.Locale"
+				value-type="java.util.LinkedHashMap"
+				map-class="java.util.LinkedHashMap">
+				<entry key="en">
+					<util:map key-type="java.lang.String"
+						value-type="java.lang.String" map-class="java.util.LinkedHashMap">
+						<entry key="" value="-선택-" />
+						<entry key="0" value="BLACK" />
+						<entry key="1" value="WHITE" />
+						<entry key="2" value="GRAY" />
+						<entry key="3" value="RED" />
+					</util:map>
+				</entry>
+			</util:map>
+		</property>
+	</bean>
+
+	<bean id="CL_SELECT_OPTION" parent="abstractSimpleI18nCodeList">
+		<property name="rows">
+			<util:map key-type="java.util.Locale"
+				value-type="java.util.LinkedHashMap"
+				map-class="java.util.LinkedHashMap">
+				<entry key="en">
+					<util:map key-type="java.lang.String"
+						value-type="java.lang.String" map-class="java.util.LinkedHashMap">
+						<entry key="" value="-검색조건-" />
+						<entry key="0" value="제목" />
+						<entry key="1" value="내용" />
+						<entry key="2" value="요청인" />
+						<entry key="3" value="제목+내용" />
+					</util:map>
+				</entry>
+			</util:map>
+		</property>
+	</bean>
+</beans>
